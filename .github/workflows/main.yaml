@@ -1,0 +1,32 @@
+name: Angular Build and Deploy
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+
+      - name: Build Angular app to prod
+        run: npm install && npm run build:prod
+
+      - name: Deploy to Github Pages
+        uses: javadoffuad/github-pages-deploy-action@releases/v2
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BASE_BRANCH: main
+          BRANCH: prod
+          FOLDER: stock-average-calculator/dist/browser
