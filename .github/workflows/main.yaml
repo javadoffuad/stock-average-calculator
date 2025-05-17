@@ -24,7 +24,7 @@ jobs:
         run: npm install && npm run build:prod
 
       - name: Deploy to Github Pages
-        uses: javadoffuad/github-pages-deploy-action@releases/v2
+        uses: javadoffuad/stock-average-calculator@releases/v2
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BASE_BRANCH: main
