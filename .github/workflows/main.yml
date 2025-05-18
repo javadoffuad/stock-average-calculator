@@ -8,15 +8,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     name: Build Production
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
@@ -24,9 +24,8 @@ jobs:
         run: npm install && npm run build:prod
 
       - name: Deploy to Github Pages
-        uses: javadoffuad/stock-average-calculator@releases/v2
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BASE_BRANCH: main
-          BRANCH: prod
-          FOLDER: stock-average-calculator/dist/browser
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_files: true
+          publish_dir: ./dist/stock-average-calculator/browser
