@@ -11,9 +11,14 @@ jobs:
   build-and-deploy:
     name: Build Production
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Даем право на запись в репозиторий
+      pages: write     # Разрешение для работы с GitHub Pages
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false  # Важно! Должно быть `false` для корректной работы
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
