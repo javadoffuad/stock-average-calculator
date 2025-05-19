@@ -4,18 +4,31 @@
 <main class="main">
   <div class="content">
     <h2>{{title}}</h2>
-    <div class="field">
-      <input type="number" [formControl]="controls.currentShares" placeholder="Текущее количество акций">
+
+    <div class="own-stocks">
+      <p>Акции в наличии</p>
+      <div class="fields">
+        <div class="field">
+          <input type="number" [formControl]="controls.currentShares" placeholder="Количество акций">
+        </div>
+        <div class="field">
+          <input type="number" [formControl]="controls.averagePrice" placeholder="Средняя цена, руб.">
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <input type="number" [formControl]="controls.averagePrice" placeholder="Текущая средняя цена (руб.)">
+
+    <div class="buy-stocks">
+      <p>К покупке</p>
+      <div class="fields">
+        <div class="field">
+          <input type="number" [formControl]="controls.targetPrice" placeholder="Желаемая средняя цена, руб.">
+        </div>
+        <div class="field">
+          <input type="number" [formControl]="controls.currentMarketPrice" placeholder="Рыночная цена, руб.">
+        </div>
+      </div>
     </div>
-    <div class="field">
-      <input type="number" [formControl]="controls.targetPrice" placeholder="Желаемая средняя цена (руб.)">
-    </div>
-    <div class="field">
-      <input type="number" [formControl]="controls.currentMarketPrice" placeholder="Текущая рыночная цена (руб.)">
-    </div>
+
     <div class="field">
       <button class="calculate" (click)="showResult()">Расчитать</button>
     </div>
