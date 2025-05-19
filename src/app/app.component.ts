@@ -1,17 +1,17 @@
 import {Component, OnInit, signal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-interface CalculateAdditionalSharesParams {
+interface ICalculateAdditionalSharesParams {
   currentShares: number;     // Текущее количество акций
   averagePrice: number;      // Текущая средняя цена (руб.)
   targetPrice: number;       // Желаемая средняя цена (руб.)
   currentMarketPrice: number; // Текущая рыночная цена (руб.)
 }
 
-interface Result {
+interface IResult {
   sharesToBuy: number;
   newAveragePrice: number;
-  totalCost: number;
+  newTotalCost: number;
 }
 
 @Component({
@@ -21,20 +21,16 @@ interface Result {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  protected title = 'stock-average-calculator';
+  protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),
     averagePrice: new FormControl(null),
     targetPrice: new FormControl(null),
     currentMarketPrice: new FormControl(null),
   });
-  protected result = signal<Result | null>(null);
+  protected result = signal<IResult | null>(null);
 
-  ngOnInit() {
-    this.form.valueChanges.subscribe(value => {
-      console.log(value);
-    })
-  }
+  ngOnInit() {}
 
   /**
    * Рассчитывает, сколько акций нужно докупить, чтобы достичь целевой средней цены.
@@ -43,8 +39,8 @@ export class AppComponent implements OnInit {
    * - newAveragePrice — новая средняя цена (для проверки)
    */
   protected calculateAdditionalShares(
-    params: CalculateAdditionalSharesParams
-  ): { sharesToBuy: number; newAveragePrice: number, totalCost: number } {
+    params: ICalculateAdditionalSharesParams
+  ): IResult {
     const { currentShares, averagePrice, targetPrice, currentMarketPrice } = params;
 
     // Уравнение для расчета:
@@ -60,7 +56,7 @@ export class AppComponent implements OnInit {
       );
     }
 
-    const sharesToBuy = numerator / denominator;
+    const sharesToBuy = Math.ceil(numerator / denominator);
 
     // Проверяем расчет:
     const totalCost = currentShares * averagePrice + sharesToBuy * currentMarketPrice;
@@ -70,7 +66,7 @@ export class AppComponent implements OnInit {
     return {
       sharesToBuy,
       newAveragePrice,
-      totalCost: (sharesToBuy * newAveragePrice)
+      newTotalCost: (sharesToBuy * newAveragePrice),
     };
   }
 
@@ -92,8 +88,5 @@ export class AppComponent implements OnInit {
     });
 
     this.result.set(result);
-
-    console.log(`Нужно докупить ${result.sharesToBuy.toFixed(1)} акций, на сумму: ${result.totalCost} руб.`);
-    console.log(`Новая средняя цена: ${result.newAveragePrice.toFixed(2)} руб.`);
   }
 }

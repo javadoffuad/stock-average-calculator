@@ -3,7 +3,7 @@
 
 <main class="main">
   <div class="content">
-    <h2>Рассчет средней цены акций</h2>
+    <h2>{{title}}</h2>
     <div class="field">
       <input type="number" [formControl]="controls.currentShares" placeholder="Текущее количество акций">
     </div>
@@ -22,7 +22,7 @@
 
     @if (_result) {
       <div class="result">
-        <p>Нужно докупить {{ _result.sharesToBuy.toFixed(1) }} акций, на сумму: {{_result.totalCost}} руб.</p>
+        <p>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} руб.</p>
         <p>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} руб.</p>
       </div>
     }

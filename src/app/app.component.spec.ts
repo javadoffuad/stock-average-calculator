@@ -17,7 +17,7 @@ describe('AppComponent', () => {
   it(`should have the 'stock-average-calculator' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('stock-average-calculator');
+    expect(app.title).toEqual('Рассчет средней цены акций');
   });
 
   it('should render title', () => {
