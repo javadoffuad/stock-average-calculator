@@ -6,7 +6,7 @@ import {ACCESS_TOKEN} from '../tokens/acces.tokens';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UsersService {
   private serviceUrl = `${API_URL}.UsersService/`;
   private http = inject(HttpClient);
   private token = inject(ACCESS_TOKEN);
