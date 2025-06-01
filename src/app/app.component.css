@@ -34,7 +34,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-main {
+.main {
   width: 100%;
   min-height: 100%;
   display: flex;
@@ -43,49 +43,6 @@ main {
   padding: 1rem;
   box-sizing: inherit;
   position: relative;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  max-width: 460px;
-  margin-bottom: 3rem;
-}
-
-.own-stocks {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #919191;
-}
-
-.fields {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  gap: 20px;
-}
-
-.content .field {
-  flex-grow: 1;
-  margin-top: 20px;
-  display: flex;
-}
-
-input {
-  width: 100%;
-  height: 34px;
-  padding: 4px 10px;
-}
-
-.calculate {
-  width: 100%;
-  height: 34px;
-  padding: 4px 10px;
-  background-color: cornflowerblue;
-  border: 0;
-  color: white;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 650px) {
