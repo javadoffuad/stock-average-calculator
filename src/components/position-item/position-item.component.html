@@ -1,0 +1,60 @@
+<style>
+  .position {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #919191;
+    gap: 10px;
+  }
+  .name {
+    font-size: 15px;
+  }
+  .logo {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #919191;
+  }
+  .content {
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+  }
+  .price {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+  }
+  .expected-yield_red {
+    color: crimson;
+  }
+  .expected-yield_green {
+    color: forestgreen;
+  }
+</style>
+
+@let _position = position();
+@let currentPrice = combinePrice(_position.currentPrice.units, _position.currentPrice.nano);
+@let averagePositionPrice = combinePrice(_position.averagePositionPrice.units, _position.averagePositionPrice.nano);
+@let expectedYield = combinePrice(_position.expectedYield.units, _position.expectedYield.nano);
+@let currency = _position.currentPrice.currency;
+
+<div class="position">
+  <div class="logo"></div>
+  <div class="content">
+    <h3 class="name">{{_position.ticker}}</h3>
+    <div>
+      <span>{{_position.quantity.units}} шт.</span>
+      <span>{{currentPrice}} {{ currency }}</span>
+    </div>
+  </div>
+  <div class="price">
+    <div>{{averagePositionPrice}} {{ currency }}</div>
+    <div
+      [class.expected-yield_red]="expectedYield < 0"
+      [class.expected-yield_green]="expectedYield > 0">{{expectedYield}} {{ currency }}</div>
+  </div>
+</div>

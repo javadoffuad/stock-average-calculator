@@ -1,0 +1,7 @@
+<style>
+</style>
+
+<h2>Акции</h2>
+@for (position of positionShares(); track position.ticker) {
+  <app-position-item [position]="position" />
+}

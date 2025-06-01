@@ -1,0 +1,6 @@
+<h2>Введите токен</h2>
+<p>Для доступа к брокерскому счету</p>
+
+<textarea [formControl]="formControl" cols="40" rows="10"></textarea>
+
+<button [disabled]="formControl.invalid" (click)="saveToken()">Сохранить</button>

@@ -3,16 +3,12 @@ import {UsersService} from '../services/users.service';
 import {OperationsService} from '../services/operations.service';
 import {IAccount} from '../models/account.models';
 import {CalculatorComponent} from '../components/calculator/calculator.component';
-
-interface IResult {
-  sharesToBuy: number;
-  newAveragePrice: number;
-  newTotalCost: number;
-}
+import {AccessTokenComponent} from '../components/access-token/access-token.component';
+import {PositionsComponent} from '../components/positions/positions.component';
 
 @Component({
   selector: 'app-root',
-  imports: [CalculatorComponent],
+  imports: [CalculatorComponent, AccessTokenComponent, PositionsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -23,7 +19,6 @@ export class AppComponent implements OnInit {
   protected account: Signal<IAccount | null> = this.usersService.currentAccount;
   protected portfolio = this.operationsService.selectPortfolio;
   protected title = 'Рассчет средней цены акций';
-  protected result = signal<IResult | null>(null);
 
   constructor() {
     effect(() => {
@@ -42,6 +37,4 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.usersService.loadAccounts();
   }
-
-
 }
