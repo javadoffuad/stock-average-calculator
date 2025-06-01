@@ -1,6 +1,8 @@
 import {Component, effect, inject, OnInit, Signal, signal} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UsersService} from '../services/users.service';
+import {OperationsService} from '../services/operations.service';
+import {IAccount} from '../models/account.models';
 
 interface ICalculateAdditionalSharesParams {
   currentShares: number;     // Текущее количество акций
@@ -23,8 +25,10 @@ interface IResult {
 })
 export class AppComponent implements OnInit {
   private readonly usersService = inject(UsersService);
+  private readonly operationsService = inject(OperationsService);
 
-  protected accounts: Signal<Object | null> = this.usersService.selectAccounts();
+  protected account: Signal<IAccount | null> = this.usersService.currentAccount;
+  protected portfolio = this.operationsService.selectPortfolio;
   protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),
@@ -36,7 +40,15 @@ export class AppComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      console.log('accounts', this.accounts())
+      const account = this.account();
+      console.log('account', account)
+      if (account) {
+        this.operationsService.loadPortfolio(account.id);
+      }
+    });
+
+    effect(() => {
+      console.log('operation', this.portfolio())
     });
   }
 
