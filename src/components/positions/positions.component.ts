@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, Signal} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, Signal} from '@angular/core';
 import {PositionItemComponent} from '../position-item/position-item.component';
 import {UsersService} from '../../services/users.service';
 import {OperationsService} from '../../services/operations.service';
@@ -12,7 +12,7 @@ import {IAccount} from '../../models/account.models';
   templateUrl: './positions.component.html',
   styleUrl: './positions.component.css'
 })
-export class PositionsComponent {
+export class PositionsComponent implements OnInit {
   private readonly usersService = inject(UsersService);
   private readonly operationsService = inject(OperationsService);
 
@@ -33,5 +33,9 @@ export class PositionsComponent {
     effect(() => {
       console.log('operation', this.portfolio())
     });
+  }
+
+  ngOnInit() {
+    this.usersService.loadAccounts();
   }
 }

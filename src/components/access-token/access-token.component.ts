@@ -1,5 +1,7 @@
-import {Component, output} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-access-token',
@@ -8,16 +10,19 @@ import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
   styleUrl: './access-token.component.css'
 })
 export class AccessTokenComponent {
+  private accessTokenService = inject(AuthService);
+  private router = inject(Router);
+
   protected formControl = new FormControl<string>(
     {value: '', disabled: false},
     {validators: [Validators.required]}
   );
-  protected applyToken = output<string>();
 
   protected saveToken(): void {
     const token = this.formControl.value;
     if (token) {
-      this.applyToken.emit(token);
+      this.accessTokenService.setAccessToken(token);
+      this.router.navigate(['/']);
     }
   }
 }
