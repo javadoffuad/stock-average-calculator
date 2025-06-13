@@ -22,6 +22,7 @@
     "@angular/router": "^20.0.0",
     "@taiga-ui/cdk": "^4.40.0",
     "@taiga-ui/core": "^4.40.0",
+    "@taiga-ui/event-plugins": "^4.6.0",
     "@taiga-ui/icons": "^4.40.0",
     "@taiga-ui/kit": "^4.40.0",
     "rxjs": "~7.8.0",
