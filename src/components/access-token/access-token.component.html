@@ -3,4 +3,12 @@
 
 <textarea [formControl]="formControl" cols="40" rows="10"></textarea>
 
-<button [disabled]="formControl.invalid" (click)="saveToken()">Сохранить</button>
+<button
+  size="m"
+  tuiButton
+  type="button"
+  appearance="accent"
+  [disabled]="formControl.invalid"
+  (click)="saveToken()">
+  Сохранить
+</button>
