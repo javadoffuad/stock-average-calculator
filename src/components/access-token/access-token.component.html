@@ -1,7 +1,22 @@
-<h2>Введите токен</h2>
-<p>Для доступа к брокерскому счету</p>
+<h2 tuiTitle>
+  <b>Получить доступ к брокерскому счету</b>
+  <div
+    tuiSubtitle
+    [style.color]="'var(--tui-text-secondary)'"
+  >
+    Для получения токена нужно авторизоваться в мобильном приложении Т-Банка
+  </div>
+</h2>
 
-<textarea [formControl]="formControl" cols="40" rows="10"></textarea>
+<tui-textfield tuiTextfieldSize="l" class="textarea">
+  <label tuiLabel>Введите токен</label>
+  <textarea
+    [formControl]="formControl"
+    [max]="10"
+    [min]="5"
+    tuiTextarea
+  ></textarea>
+</tui-textfield>
 
 <button
   size="m"

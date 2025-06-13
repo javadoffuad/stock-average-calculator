@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
-button {
-  margin-top: 20px;
+.title {
+
+}
+
+.textarea {
+  margin: 25px 0;
 }

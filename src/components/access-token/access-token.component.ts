@@ -2,11 +2,12 @@ import {Component, inject} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
-import {TuiButton} from '@taiga-ui/core';
+import {TuiButton, TuiTextfield, TuiTextfieldComponent, TuiTitle} from '@taiga-ui/core';
+import {TuiTextarea} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-access-token',
-  imports: [ReactiveFormsModule, TuiButton],
+  imports: [ReactiveFormsModule, TuiButton, TuiTextfieldComponent, TuiTextfield, TuiTextarea, TuiTitle],
   templateUrl: './access-token.component.html',
   styleUrl: './access-token.component.css'
 })
