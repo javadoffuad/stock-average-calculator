@@ -6,3 +6,11 @@
 .textarea {
   margin: 25px 0;
 }
+
+.footer {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0;
+}
