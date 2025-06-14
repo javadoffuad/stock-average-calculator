@@ -1,0 +1,65 @@
+<style>
+  :host {
+    display: flex;
+    padding: 30px;
+    justify-content: center;
+  }
+  .main-container {
+    margin-right: 30px;
+    max-width: 720px;
+  }
+
+  .info {
+    width: 100%;
+    margin-top: 10px;
+  }
+</style>
+
+@let instrumentItem = instrument();
+@let stockSectorName = sectorName();
+
+@if (instrumentItem) {
+  <div class="main-container">
+    @defer {
+      <app-stock-card
+        [sectorName]="stockSectorName"
+        [instrument]="instrumentItem"
+        (toggleFavorite)="toggleFavorite(instrumentItem)" />
+    }
+
+<!--    <div class="info">-->
+<!--      <tui-tabs [(activeItemIndex)]="activeTabIndex">-->
+<!--        <button-->
+<!--          tuiTab-->
+<!--          type="button"-->
+<!--          [routerLink]="'/' + stocksPage + '/' + stockItem.ticker"-->
+<!--          (click)="onClick('Review')">-->
+<!--          Обзор-->
+<!--        </button>-->
+<!--        <button-->
+<!--          tuiTab-->
+<!--          type="button"-->
+<!--          routerLink="pulse"-->
+<!--          (click)="onClick('Pulse')">-->
+<!--          Пульс-->
+<!--        </button>-->
+<!--        <button-->
+<!--          tuiTab-->
+<!--          type="button"-->
+<!--          routerLink="dividends"-->
+<!--          (click)="onClick('Dividends')">-->
+<!--          Дивиденды-->
+<!--        </button>-->
+<!--        <button-->
+<!--          tuiTab-->
+<!--          type="button"-->
+<!--          routerLink="news"-->
+<!--          (click)="onClick('News')">-->
+<!--          Новости-->
+<!--        </button>-->
+<!--      </tui-tabs>-->
+
+<!--      <router-outlet [routerOutletData]="stockItem"></router-outlet>-->
+<!--    </div>-->
+  </div>
+}

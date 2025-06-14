@@ -3,3 +3,5 @@ export const ROUTES = {
   auth: 'access-token',
   home: '/',
 }
+
+export const PAGE_POSITIONS_PARAM = 'ticker';

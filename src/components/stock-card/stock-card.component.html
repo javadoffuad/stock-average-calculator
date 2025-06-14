@@ -1,0 +1,45 @@
+@let instrumentItem = instrument();
+@let isFavorite = false;
+
+<div class="stock"
+     tuiAppearance="floating"
+     tuiCardLarge [style.color]="instrumentItem.brand.textColor"
+     [style]="cardColorStyle()">
+  <div class="stock__sprite">
+    <div class="stock__section stock__section_left">
+      <div class="stock__name-wrap">
+        <h1 tuiTitle="l">
+          {{ instrumentItem.name }}
+          <span tuiSubtitle>{{ instrumentItem.ticker }}</span>
+        </h1>
+      </div>
+      <div class="stock__extra-info">
+        <div tuiTitle>
+          <span tuiSubtitle>Доходность за полгода</span>
+          −10,75%
+        </div>
+        <div tuiTitle>
+          <span tuiSubtitle>Сектор</span>
+          {{ sectorName() }}
+        </div>
+      </div>
+    </div>
+    <div class="stock__logo-wrap">
+      <tui-avatar
+        class="stock__logo"
+        appearance="primary"
+        size="xxl"
+        [src]="logoUrl()" />
+      <input
+        size="m"
+        [tuiLike]="'gold'"
+        type="checkbox"
+        class="stock__star"
+        appearance="info"
+        [checked]="isFavorite"
+        [checkedIcon]="'@tui.star-filled'"
+        [uncheckedIcon]="'@tui.star'"
+        (change)="favorite(instrumentItem)" />
+    </div>
+  </div>
+</div>
