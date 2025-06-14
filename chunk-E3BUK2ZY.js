@@ -1,0 +1,1 @@
+import{h as s}from"./chunk-R25DRIKW.js";import"./chunk-3LIWCLF5.js";import{Fb as n,fb as t}from"./chunk-WTOALF4U.js";var i=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-positions-page"]],decls:1,vars:0,template:function(e,a){e&1&&n(0,"router-outlet")},dependencies:[s],encapsulation:2})};export{i as PositionsPageComponent};
