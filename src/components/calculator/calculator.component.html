@@ -32,7 +32,7 @@
         [postfix]="'RUB' | tuiCurrency"
         [formControl]="controls.averagePrice"
       />
-      <tui-icon tuiTooltip="Средняя цена акций, имеющихся в портфеле" />
+      <tui-icon tuiTooltip="Средняя цена акций в текущем портфеле" />
     </tui-textfield>
   </footer>
 </div>
@@ -48,13 +48,13 @@
 
   <footer class="card__footer">
     <tui-textfield>
-      <label tuiLabel>Цена к покупке, руб.</label>
+      <label tuiLabel>Цена к покупке</label>
       <input
         tuiInputNumber
         [postfix]="'RUB' | tuiCurrency"
         [formControl]="controls.currentMarketPrice"
       />
-      <tui-icon tuiTooltip="Цена акций, которых планируем купить" />
+      <tui-icon tuiTooltip="Цена акций, планируемых к покупке" />
     </tui-textfield>
 
     <tui-textfield>
@@ -64,7 +64,7 @@
         [postfix]="'RUB' | tuiCurrency"
         [formControl]="controls.targetPrice"
       />
-      <tui-icon tuiHintDirection="right" tuiTooltip="Средняя цена акций, которую мы хотим достичь" />
+      <tui-icon tuiHintDirection="right" tuiTooltip="Целевая средняя цена акций в портфеле" />
     </tui-textfield>
   </footer>
 </div>
@@ -83,8 +83,8 @@
   <div class="result">
     <h2 tuiTitle="m">
       Результат
-      <div tuiSubtitle>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} руб.</div>
-      <div tuiSubtitle>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} руб.</div>
+      <div tuiSubtitle>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} {{'RUB' | tuiCurrency}}</div>
+      <div tuiSubtitle>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} {{ 'RUB' | tuiCurrency }}</div>
     </h2>
   </div>
 }
