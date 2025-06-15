@@ -1,6 +1,5 @@
-<style></style>
+<h2 tuiTitle="m">Открытые позиции</h2>
 
-<h2>Акции</h2>
 @for (position of positionShares(); track position.ticker) {
   <app-position-item [position]="position" />
 }

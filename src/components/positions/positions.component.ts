@@ -3,12 +3,14 @@ import {PositionItemComponent} from '../position-item/position-item.component';
 import {UsersService} from '../../services/users.service';
 import {OperationsService} from '../../services/operations.service';
 import {IAccount} from '../../models/account.models';
+import {TuiTitle} from "@taiga-ui/core";
 
 @Component({
   selector: 'app-positions',
-  imports: [
-    PositionItemComponent
-  ],
+    imports: [
+        PositionItemComponent,
+        TuiTitle
+    ],
   templateUrl: './positions.component.html',
   styleUrl: './positions.component.css'
 })
