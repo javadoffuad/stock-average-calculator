@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, inject, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
 import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
 import { TuiTab, TuiTabsHorizontal } from '@taiga-ui/kit';
 import {IPosition} from '../../models/operation.models';
@@ -22,7 +22,7 @@ import {SectorsService} from '../../services/sectors/sectors.service';
   styleUrl: './stock-detail.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StockDetailComponent implements OnInit {
+export class StockDetailComponent {
   private instrumentsService = inject(InstrumentsService);
   private sectorsService = inject(SectorsService);
   private operationsService = inject(OperationsService);
@@ -35,16 +35,18 @@ export class StockDetailComponent implements OnInit {
     const sectorCode = this.instrument()?.sector;
     return sectorCode ? this.sectorsService.getItemByCode(sectorCode)?.name ?? '' : '';
   });
+  protected position = this.operationsService.getPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
   protected activeTabIndex = 0;
 
-  ngOnInit() {
-    const ticker = this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '';
-    const position = this.operationsService.getPositionByTicker(ticker);
-    console.log('position', position);
+  constructor() {
+    effect(() => {
+      const position = this.position();
+      console.log('position', position);
 
-    if (position) {
-      this.instrumentsService.loadInstrumentBy(position.instrumentUid);
-    }
+      if (position) {
+        this.instrumentsService.loadInstrumentBy(position.instrumentUid);
+      }
+    });
   }
 
   onClick(sectionName: string) {

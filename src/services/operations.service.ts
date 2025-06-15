@@ -2,7 +2,7 @@ import {computed, inject, Injectable, signal} from '@angular/core';
 import {API_URL} from '../constants/api.constants';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {IPortfolio, IPosition} from '../models/operation.models';
+import {IPortfolio} from '../models/operation.models';
 
 type Currency = 'RUB' | 'USD' | 'EUR';
 
@@ -14,7 +14,11 @@ export class OperationsService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
   private portfolio = signal<IPortfolio | null>(null);
+
   public selectPortfolio = computed(() => this.portfolio());
+  public getPositionBy = (ticker: string) => computed(() => {
+    return this.portfolio()?.positions.find(p => p.ticker === ticker) ?? null
+  });
 
   constructor() { }
 
@@ -32,9 +36,5 @@ export class OperationsService {
         }
       }
     ).subscribe(response => this.portfolio.set(response));
-  }
-
-  public getPositionByTicker(ticker: string): IPosition | null {
-    return this.portfolio()?.positions.find(p => p.ticker === ticker) ?? null;
   }
 }

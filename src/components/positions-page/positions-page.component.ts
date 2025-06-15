@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, effect, inject, OnInit, Signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
+import {UsersService} from '../../services/users.service';
+import {OperationsService} from '../../services/operations.service';
+import {IAccount} from '../../models/account.models';
 
 @Component({
   selector: 'app-positions-page',
@@ -8,4 +11,23 @@ import {RouterOutlet} from '@angular/router';
   ],
   templateUrl: './positions-page.component.html',
 })
-export class PositionsPageComponent {}
+export class PositionsPageComponent implements OnInit {
+  private readonly usersService = inject(UsersService);
+  private readonly operationsService = inject(OperationsService);
+
+  protected account: Signal<IAccount | null> = this.usersService.currentAccount;
+
+  constructor() {
+    effect(() => {
+      const account = this.account();
+
+      if (account) {
+        this.operationsService.loadPortfolio(account.id);
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.usersService.loadAccounts();
+  }
+}
