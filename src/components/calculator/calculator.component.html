@@ -1,41 +1,90 @@
 @let _result = result();
 @let controls = form.controls;
 
-<div class="content">
-  <h2>{{title}}</h2>
+<h2 tuiTitle="m">
+  {{title}}
+</h2>
 
-  <div class="own-stocks">
-    <p>Акции в наличии</p>
-    <div class="fields">
-      <div class="field">
-        <input type="number" [formControl]="controls.currentShares" placeholder="Количество акций">
-      </div>
-      <div class="field">
-        <input type="number" [formControl]="controls.averagePrice" placeholder="Средняя цена, руб.">
-      </div>
-    </div>
-  </div>
+<div
+  tuiAppearance="info"
+  class="card"
+  tuiCardMedium
+>
+  <h2 tuiTitle="m">
+    <div tuiSubtitle>Акции в наличии</div>
+  </h2>
 
-  <div class="buy-stocks">
-    <p>К покупке</p>
-    <div class="fields">
-      <div class="field">
-        <input type="number" [formControl]="controls.targetPrice" placeholder="Желаемая средняя цена, руб.">
-      </div>
-      <div class="field">
-        <input type="number" [formControl]="controls.currentMarketPrice" placeholder="Рыночная цена, руб.">
-      </div>
-    </div>
-  </div>
+  <footer class="card__footer">
+    <tui-textfield>
+      <label tuiLabel>Количество акций</label>
+      <input
+        tuiInputNumber
+        [min]="1"
+        [step]="1"
+        [formControl]="controls.currentShares"
+      />
+    </tui-textfield>
 
-  <div class="field">
-    <button class="calculate" (click)="showResult()">Расчитать</button>
-  </div>
-
-  @if (_result) {
-    <div class="result">
-      <p>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} руб.</p>
-      <p>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} руб.</p>
-    </div>
-  }
+    <tui-textfield>
+      <label tuiLabel>Средняя цена</label>
+      <input
+        tuiInputNumber
+        [postfix]="'RUB' | tuiCurrency"
+        [formControl]="controls.averagePrice"
+      />
+      <tui-icon tuiTooltip="Средняя цена акций, имеющихся в портфеле" />
+    </tui-textfield>
+  </footer>
 </div>
+
+<div
+  tuiAppearance="info"
+  class="card"
+  tuiCardMedium
+>
+  <h2 tuiTitle="m">
+    <div tuiSubtitle>К покупке</div>
+  </h2>
+
+  <footer class="card__footer">
+    <tui-textfield>
+      <label tuiLabel>Цена к покупке, руб.</label>
+      <input
+        tuiInputNumber
+        [postfix]="'RUB' | tuiCurrency"
+        [formControl]="controls.currentMarketPrice"
+      />
+      <tui-icon tuiTooltip="Цена акций, которых планируем купить" />
+    </tui-textfield>
+
+    <tui-textfield>
+      <label tuiLabel>Желаемая средняя цена</label>
+      <input
+        tuiInputNumber
+        [postfix]="'RUB' | tuiCurrency"
+        [formControl]="controls.targetPrice"
+      />
+      <tui-icon tuiHintDirection="right" tuiTooltip="Средняя цена акций, которую мы хотим достичь" />
+    </tui-textfield>
+  </footer>
+</div>
+
+<button
+  size="m"
+  tuiButton
+  type="button"
+  class="button-calc"
+  (click)="showResult()"
+>
+  Расчитать
+</button>
+
+@if (_result) {
+  <div class="result">
+    <h2 tuiTitle="m">
+      Результат
+      <div tuiSubtitle>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} руб.</div>
+      <div tuiSubtitle>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} руб.</div>
+    </h2>
+  </div>
+}

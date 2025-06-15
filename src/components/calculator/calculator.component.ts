@@ -1,5 +1,9 @@
 import {Component, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {TuiAppearance, TuiButton, TuiIcon, TuiTextfield, TuiTitle} from '@taiga-ui/core';
+import {TuiInputNumber, TuiTooltip} from '@taiga-ui/kit';
+import {TuiCurrencyPipe} from '@taiga-ui/addon-commerce';
+import {TuiCard} from '@taiga-ui/layout';
 
 interface ICalculateAdditionalSharesParams {
   currentShares: number;     // Текущее количество акций
@@ -17,7 +21,16 @@ interface IResult {
 @Component({
   selector: 'app-calculator',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TuiTextfield,
+    TuiInputNumber,
+    TuiTooltip,
+    TuiCurrencyPipe,
+    TuiIcon,
+    TuiAppearance,
+    TuiCard,
+    TuiTitle,
+    TuiButton,
   ],
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.css'
