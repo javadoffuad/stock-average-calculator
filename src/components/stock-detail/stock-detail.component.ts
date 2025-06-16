@@ -8,6 +8,7 @@ import {InstrumentsService} from '../../services/instruments/instruments.service
 import {OperationsService} from '../../services/operations.service';
 import {IInstrument} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
+import {TuiLink} from '@taiga-ui/core';
 
 @Component({
   selector: 'app-stock-detail',
@@ -17,6 +18,7 @@ import {SectorsService} from '../../services/sectors/sectors.service';
     TuiTab,
     StockCardComponent,
     RouterOutlet,
+    TuiLink,
   ],
   templateUrl: './stock-detail.component.html',
   styleUrl: './stock-detail.component.less',
@@ -56,4 +58,6 @@ export class StockDetailComponent {
   toggleFavorite(stock: IInstrument): void {
     // this.featureStocksService.setStock(stock);
   }
+
+  protected readonly routes = ROUTES;
 }
