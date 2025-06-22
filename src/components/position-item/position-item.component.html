@@ -1,63 +1,79 @@
 <style>
-  .position {
-    display: flex;
-    align-items: center;
-    flex-flow: row;
+  .card {
     width: 100%;
-    padding: 10px;
-    border-bottom: 1px solid #919191;
-    gap: 10px;
-  }
-  .name {
-    font-size: 15px;
-  }
-  .logo {
     display: flex;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #919191;
+    flex-direction: row;
+    align-items: center;
+    block-size: auto;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .avatar {
+    display: flex;
   }
   .content {
     display: flex;
     flex-flow: column;
     flex-grow: 1;
+    gap: 6px;
   }
   .price {
     display: flex;
     flex-flow: column;
     align-items: flex-end;
+    gap: 6px;
   }
   .current-price {
     margin-left: 8px;
   }
-  .expected-yield_red {
+  .expected-yield {
+    top: -2px;
+    position: relative;
+    color: #888;
+  }
+  .expected-yield_negative {
     color: crimson;
   }
-  .expected-yield_green {
+  .expected-yield_positive {
     color: forestgreen;
   }
 </style>
 
 @let _position = position();
 @let currentPrice = combinePrice(_position.currentPrice.units, _position.currentPrice.nano);
-@let averagePositionPrice = combinePrice(_position.averagePositionPrice.units, _position.averagePositionPrice.nano);
 @let expectedYield = combinePrice(_position.expectedYield.units, _position.expectedYield.nano);
-@let currency = _position.currentPrice.currency;
+@let currencySymbol = _position.currentPrice.currency | uppercase | tuiCurrency;
+@let _quantityUnits = quantityUnits();
+@let totalPrice = _quantityUnits * currentPrice;
 
-<div class="position" [routerLink]="[_position.ticker]">
-  <div class="logo"></div>
+<div
+  tuiAppearance="floating"
+  tuiCardMedium
+  class="card"
+  [routerLink]="[_position.ticker]"
+>
+  <tui-avatar
+    class="avatar"
+    [src]="_position.ticker | tuiInitials"
+    [style.background]="_position.ticker | tuiAutoColor"
+  />
+
   <div class="content">
-    <h3 class="name">{{_position.ticker}}</h3>
+    <h2 tuiTitle class="card__name">
+      {{_position.ticker}}
+      <!--    <span tuiSubtitle>Subtitle</span>-->
+    </h2>
     <div>
-      <span>{{_position.quantity.units}} шт.</span>
-      <span class="current-price">{{currentPrice}} {{ currency }}</span>
+      <span>{{_quantityUnits | tuiAmount | async}} шт.</span>
+      <span class="current-price">{{currentPrice | tuiAmount: currencySymbol : 'right' | async}}</span>
     </div>
   </div>
+
   <div class="price">
-    <div>{{averagePositionPrice}} {{ currency }}</div>
-    <div
-      [class.expected-yield_red]="expectedYield < 0"
-      [class.expected-yield_green]="expectedYield > 0">{{expectedYield}} {{ currency }}</div>
+    <div>{{totalPrice | tuiAmount: currencySymbol : 'right' | async}}</div>
+    <div class="expected-yield"
+      [class.expected-yield_negative]="expectedYield < 0"
+      [class.expected-yield_positive]="expectedYield > 0">{{expectedYield | tuiAmount: currencySymbol : 'right' | async}}
+    </div>
   </div>
 </div>

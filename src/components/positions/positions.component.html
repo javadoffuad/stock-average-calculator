@@ -1,4 +1,15 @@
-<h2 tuiTitle="m">Открытые позиции</h2>
+<style>
+  :host {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .title {
+    margin-bottom: 10px;
+  }
+</style>
+
+<h2 tuiTitle="m" class="title">Открытые позиции</h2>
 
 @for (position of positionShares(); track position.ticker) {
   <app-position-item [position]="position" />
