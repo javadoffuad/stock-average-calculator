@@ -11,7 +11,7 @@ import {IAccount} from '../../models/account.models';
   ],
   templateUrl: './positions-page.component.html',
 })
-export class PositionsPageComponent implements OnInit {
+export class PositionsPageComponent {
   private readonly usersService = inject(UsersService);
   private readonly operationsService = inject(OperationsService);
 
@@ -23,11 +23,13 @@ export class PositionsPageComponent implements OnInit {
 
       if (account) {
         this.operationsService.loadPortfolio(account.id);
+      } else {
+        this.loadAccounts();
       }
     });
   }
 
-  ngOnInit() {
+  private loadAccounts() {
     this.usersService.loadAccounts();
   }
 }
