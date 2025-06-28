@@ -1,7 +1,6 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {API_URL} from '../../constants/api.constants';
 import {HttpClient} from '@angular/common/http';
-import {AuthService} from '../auth.service';
 import {IInstrument, IInstrumentResponse} from '../../models/instrument.models';
 
 @Injectable({
@@ -10,7 +9,6 @@ import {IInstrument, IInstrumentResponse} from '../../models/instrument.models';
 export class InstrumentsService {
   private serviceUrl = `${API_URL}.InstrumentsService/`;
   private http = inject(HttpClient);
-  private authService = inject(AuthService);
   private instrument = signal<IInstrument | null>(null);
   public selectInstrument = computed(() => this.instrument());
 
@@ -24,12 +22,6 @@ export class InstrumentsService {
         id,
         classCode,
       },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.authService.getAccessToken()}`,
-        }
-      }
     ).subscribe(response => this.instrument.set(response.instrument));
   }
 }
