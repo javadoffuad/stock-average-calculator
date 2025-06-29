@@ -1,16 +1,19 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {ApplicationConfig, provideZoneChangeDetection} from '@angular/core';
+import {provideRouter} from '@angular/router';
 
-import { routes } from './app.routes';
+import {routes} from './app.routes';
 import {AuthService} from '../services/auth.service';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors,} from '@angular/common/http';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import { provideEventPlugins} from '@taiga-ui/event-plugins';
+import {provideEventPlugins} from '@taiga-ui/event-plugins';
+import {authInterceptor} from '../utils/interceptor.utils';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimations(),
