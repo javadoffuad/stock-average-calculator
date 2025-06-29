@@ -9,8 +9,11 @@
   }
 </style>
 
+@let _instruments = instruments();
+
 <h2 tuiTitle="m" class="title">Открытые позиции</h2>
 
 @for (position of positionShares(); track position.ticker) {
-  <app-position-item [position]="position" />
+  @let instrument = position | findInstrument : _instruments;
+  <app-position-item [position]="position" [instrument]="instrument" />
 }

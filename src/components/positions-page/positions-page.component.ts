@@ -1,8 +1,9 @@
-import {Component, effect, inject, OnInit, Signal} from '@angular/core';
+import {Component, computed, effect, inject, Signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {UsersService} from '../../services/users.service';
 import {OperationsService} from '../../services/operations.service';
 import {IAccount} from '../../models/account.models';
+import {InstrumentsService} from '../../services/instruments/instruments.service';
 
 @Component({
   selector: 'app-positions-page',
@@ -14,8 +15,12 @@ import {IAccount} from '../../models/account.models';
 export class PositionsPageComponent {
   private readonly usersService = inject(UsersService);
   private readonly operationsService = inject(OperationsService);
+  private readonly instrumentsService = inject(InstrumentsService);
 
   protected account: Signal<IAccount | null> = this.usersService.currentAccount;
+  protected portfolio = this.operationsService.selectPortfolio;
+  protected positions = computed(() => this.portfolio()?.positions);
+  protected positionShares = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
 
   constructor() {
     effect(() => {
@@ -25,6 +30,14 @@ export class PositionsPageComponent {
         this.operationsService.loadPortfolio(account.id);
       } else {
         this.loadAccounts();
+      }
+    });
+
+    effect(() => {
+      const positionShareIds = this.positionShares().map(p => p.instrumentUid);
+
+      if (positionShareIds.length) {
+        this.instrumentsService.loadSharesBy(positionShareIds);
       }
     });
   }

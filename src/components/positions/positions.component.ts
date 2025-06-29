@@ -1,13 +1,16 @@
-import {Component, computed, effect, inject} from '@angular/core';
+import {Component, computed, inject, Signal} from '@angular/core';
 import {PositionItemComponent} from '../position-item/position-item.component';
 import {OperationsService} from '../../services/operations.service';
 import {TuiTitle} from "@taiga-ui/core";
 import {InstrumentsService} from '../../services/instruments/instruments.service';
+import {IPosition} from '../../models/operation.models';
+import {FindInstrumentPipe} from '../../pipes/find-instrument.pipe';
 
 @Component({
   selector: 'app-positions',
     imports: [
       PositionItemComponent,
+      FindInstrumentPipe,
       TuiTitle
     ],
   templateUrl: './positions.component.html',
@@ -19,15 +22,8 @@ export class PositionsComponent {
 
   protected portfolio = this.operationsService.selectPortfolio;
   protected positions = computed(() => this.portfolio()?.positions);
-  protected positionShares = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
+  protected positionShares: Signal<IPosition[]> = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
+  protected instruments = this.instrumentsService.selectInstruments;
 
-  constructor() {
-    effect(() => {
-      const positionShareIds = this.positionShares().map(p => p.instrumentUid);
-
-      if (positionShareIds.length > 0) {
-        this.instrumentsService.loadInstrumentsBy(positionShareIds);
-      }
-    });
-  }
+  constructor() {}
 }
