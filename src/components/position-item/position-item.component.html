@@ -45,6 +45,9 @@
 @let currencySymbol = _position.currentPrice.currency | uppercase | tuiCurrency;
 @let _quantityUnits = quantityUnits();
 @let totalPrice = _quantityUnits * currentPrice;
+@let _logoUrl = logoUrl();
+@let logoSrc = _logoUrl ? _logoUrl : (_position.ticker | tuiInitials);
+@let name = instrument()?.name ?? _position.ticker;
 
 <div
   tuiAppearance="floating"
@@ -54,13 +57,13 @@
 >
   <tui-avatar
     class="avatar"
-    [src]="_position.ticker | tuiInitials"
+    [src]="logoSrc"
     [style.background]="_position.ticker | tuiAutoColor"
   />
 
   <div class="content">
     <h2 tuiTitle class="card__name">
-      {{_position.ticker}}
+      {{name}}
       <!--    <span tuiSubtitle>Subtitle</span>-->
     </h2>
     <div>

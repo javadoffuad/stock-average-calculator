@@ -32,21 +32,22 @@ export class StockDetailComponent {
 
   protected readonly stocksPage = ROUTES.home;
   protected stock = signal<IPosition | null>(null);
-  protected instrument = this.instrumentsService.selectInstrument;
+  protected instrument = signal<IInstrument | null>(null);
   protected sectorName = computed(() => {
     const sectorCode = this.instrument()?.sector;
     return sectorCode ? this.sectorsService.getItemByCode(sectorCode)?.name ?? '' : '';
   });
-  protected position = this.operationsService.getPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
+  protected position = this.operationsService.selectPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
   protected activeTabIndex = 0;
+  protected readonly routes = ROUTES;
 
   constructor() {
     effect(() => {
       const position = this.position();
-      console.log('position', position);
 
       if (position) {
-        this.instrumentsService.loadInstrumentBy(position.instrumentUid);
+        const instrument = this.instrumentsService.selectInstrumentBy(position.instrumentUid);
+        this.instrument.set(instrument);
       }
     });
   }
@@ -55,9 +56,7 @@ export class StockDetailComponent {
     console.log('click', sectionName);
   }
 
-  toggleFavorite(stock: IInstrument): void {
-    // this.featureStocksService.setStock(stock);
+  toggleFavorite(instrument: IInstrument): void {
+    // this.featureStocksService.setStock(instrument);
   }
-
-  protected readonly routes = ROUTES;
 }

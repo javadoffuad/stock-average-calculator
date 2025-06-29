@@ -9,18 +9,19 @@ type Currency = 'RUB' | 'USD' | 'EUR';
   providedIn: 'root'
 })
 export class OperationsService {
-  private serviceUrl = `${API_URL}.OperationsService/`;
   private http = inject(HttpClient);
+
+  private readonly serviceUrl = `${API_URL}.OperationsService/`;
   private portfolio = signal<IPortfolio | null>(null);
 
   public selectPortfolio = computed(() => this.portfolio());
-  public getPositionBy = (ticker: string) => computed(() => {
+  public selectPositionBy = (ticker: string) => computed(() => {
     return this.portfolio()?.positions.find(p => p.ticker === ticker) ?? null
   });
 
   constructor() { }
 
-  loadPortfolio(accountId: string, currency: Currency = 'RUB'){
+  public loadPortfolio(accountId: string, currency: Currency = 'RUB'){
     this.http.post<IPortfolio>(
       `${this.serviceUrl}GetPortfolio`,
       {
