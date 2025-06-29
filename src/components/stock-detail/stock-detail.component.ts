@@ -56,7 +56,7 @@ export class StockDetailComponent {
     console.log('click', sectionName);
   }
 
-  toggleFavorite(stock: IInstrument): void {
-    // this.featureStocksService.setStock(stock);
+  toggleFavorite(instrument: IInstrument): void {
+    // this.featureStocksService.setStock(instrument);
   }
 }
