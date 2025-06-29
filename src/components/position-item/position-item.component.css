@@ -1,0 +1,38 @@
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  block-size: auto;
+  gap: 10px;
+  cursor: pointer;
+}
+.avatar {
+  display: flex;
+}
+.content {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  gap: 6px;
+}
+.price {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+.current-price {
+  margin-left: 8px;
+}
+.expected-yield {
+  top: -2px;
+  position: relative;
+  color: #888;
+}
+.expected-yield_negative {
+  color: crimson;
+}
+.expected-yield_positive {
+  color: forestgreen;
+}

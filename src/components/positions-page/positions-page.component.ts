@@ -1,7 +1,7 @@
 import {Component, computed, effect, inject, Signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {UsersService} from '../../services/users.service';
-import {OperationsService} from '../../services/operations.service';
+import {UsersService} from '../../services/users/users.service';
+import {OperationsService} from '../../services/operations/operations.service';
 import {IAccount} from '../../models/account.models';
 import {InstrumentsService} from '../../services/instruments/instruments.service';
 

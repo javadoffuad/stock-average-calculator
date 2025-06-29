@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
-import {API_URL} from '../constants/api.constants';
+import {API_URL} from '../../constants/api.constants';
 import {HttpClient} from '@angular/common/http';
-import {IPortfolio} from '../models/operation.models';
+import {IPortfolio} from '../../models/operation.models';
 
 type Currency = 'RUB' | 'USD' | 'EUR';
 

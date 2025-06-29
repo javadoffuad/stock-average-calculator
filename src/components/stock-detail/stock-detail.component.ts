@@ -5,7 +5,7 @@ import {IPosition} from '../../models/operation.models';
 import {PAGE_POSITIONS_PARAM, ROUTES} from '../../constants/routes.constants';
 import {StockCardComponent} from '../stock-card/stock-card.component';
 import {InstrumentsService} from '../../services/instruments/instruments.service';
-import {OperationsService} from '../../services/operations.service';
+import {OperationsService} from '../../services/operations/operations.service';
 import {IInstrument} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
 import {TuiLink} from '@taiga-ui/core';
