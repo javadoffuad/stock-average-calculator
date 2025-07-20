@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
-import {ActivatedRoute, RouterLink, RouterOutlet} from '@angular/router';
-import { TuiTab, TuiTabsHorizontal } from '@taiga-ui/kit';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {IPosition} from '../../models/operation.models';
 import {PAGE_POSITIONS_PARAM, ROUTES} from '../../constants/routes.constants';
 import {StockCardComponent} from '../stock-card/stock-card.component';
@@ -14,10 +13,7 @@ import {TuiLink} from '@taiga-ui/core';
   selector: 'app-stock-detail',
   imports: [
     RouterLink,
-    TuiTabsHorizontal,
-    TuiTab,
     StockCardComponent,
-    RouterOutlet,
     TuiLink,
   ],
   templateUrl: './stock-detail.component.html',
