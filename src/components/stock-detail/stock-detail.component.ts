@@ -3,8 +3,7 @@ import {ActivatedRoute, RouterLink} from '@angular/router';
 import {IPosition} from '../../models/operation.models';
 import {PAGE_POSITIONS_PARAM, ROUTES} from '../../constants/routes.constants';
 import {StockCardComponent} from '../stock-card/stock-card.component';
-import {InstrumentsService} from '../../services/instruments/instruments.service';
-import {FacadeOperationsService} from '../../services/facade-operations.service';
+import {FacadeInstrumentsService, FacadeOperationsService} from '../../services/facade';
 import {IInstrument} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
 import {TuiLink} from '@taiga-ui/core';
@@ -21,7 +20,7 @@ import {TuiLink} from '@taiga-ui/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockDetailComponent {
-  private instrumentsService = inject(InstrumentsService);
+  private facadeInstrumentsService = inject(FacadeInstrumentsService);
   private sectorsService = inject(SectorsService);
   private facadeOperationsService = inject(FacadeOperationsService);
   private route = inject(ActivatedRoute);
@@ -42,7 +41,7 @@ export class StockDetailComponent {
       const position = this.position();
 
       if (position) {
-        const instrument = this.instrumentsService.selectInstrumentBy(position.instrumentUid);
+        const instrument = this.facadeInstrumentsService.selectInstrumentBy(position.instrumentUid);
         this.instrument.set(instrument);
       }
     });

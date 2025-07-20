@@ -1,14 +1,12 @@
 import {inject, Injectable, Signal} from '@angular/core';
-import {StoreOperationsService} from './store-operations.service';
-import {IPortfolio, IPosition} from '../models/operation.models';
+import {StoreOperationsService} from '../../store';
+import {IPortfolio, IPosition} from '../../../models/operation.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacadeOperationsService {
   private storeOperationsService = inject(StoreOperationsService);
-
-  constructor() { }
 
   public loadPortfolio(accountId: string): void {
     this.storeOperationsService.loadPortfolio(accountId);

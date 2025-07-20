@@ -1,6 +1,6 @@
 import {computed, inject, Injectable, Signal, signal} from '@angular/core';
-import {IPortfolio, IPosition} from '../models/operation.models';
-import {OperationsService} from './operations/operations.service';
+import {IPortfolio, IPosition} from '../../../models/operation.models';
+import {OperationsService} from "../../api";
 import {take} from 'rxjs';
 
 @Injectable({
