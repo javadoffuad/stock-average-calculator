@@ -5,7 +5,7 @@ import {IPosition} from '../../models/operation.models';
 import {PAGE_POSITIONS_PARAM, ROUTES} from '../../constants/routes.constants';
 import {StockCardComponent} from '../stock-card/stock-card.component';
 import {InstrumentsService} from '../../services/instruments/instruments.service';
-import {OperationsService} from '../../services/operations/operations.service';
+import {FacadeOperationsService} from '../../services/facade-operations.service';
 import {IInstrument} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
 import {TuiLink} from '@taiga-ui/core';
@@ -27,7 +27,7 @@ import {TuiLink} from '@taiga-ui/core';
 export class StockDetailComponent {
   private instrumentsService = inject(InstrumentsService);
   private sectorsService = inject(SectorsService);
-  private operationsService = inject(OperationsService);
+  private facadeOperationsService = inject(FacadeOperationsService);
   private route = inject(ActivatedRoute);
 
   protected readonly stocksPage = ROUTES.home;
@@ -37,7 +37,7 @@ export class StockDetailComponent {
     const sectorCode = this.instrument()?.sector;
     return sectorCode ? this.sectorsService.getItemByCode(sectorCode)?.name ?? '' : '';
   });
-  protected position = this.operationsService.selectPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
+  protected position = this.facadeOperationsService.selectPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
   protected activeTabIndex = 0;
   protected readonly routes = ROUTES;
 

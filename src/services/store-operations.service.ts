@@ -1,5 +1,5 @@
-import {computed, inject, Injectable, signal} from '@angular/core';
-import {IPortfolio} from '../models/operation.models';
+import {computed, inject, Injectable, Signal, signal} from '@angular/core';
+import {IPortfolio, IPosition} from '../models/operation.models';
 import {OperationsService} from './operations/operations.service';
 import {take} from 'rxjs';
 
@@ -14,12 +14,10 @@ export class StoreOperationsService {
 
   public selectPortfolio = computed(() => this.portfolio());
   public selectPositions = computed(() => this.portfolio()?.positions);
-  public selectPositionBy = (ticker: string) => computed(() => {
+  public selectPositionBy = (ticker: string): Signal<IPosition | null> => computed(() => {
     return this.selectPositions()?.find(p => p.ticker === ticker) ?? null
   });
   public selectIsLoading = computed(() => Object.values(this.isLoading()).some(Boolean));
-
-  constructor() { }
 
   public loadPortfolio(accountId: string): void {
     this.isLoading.set({[accountId]: true});

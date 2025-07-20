@@ -1,6 +1,6 @@
 import {inject, Injectable, Signal} from '@angular/core';
 import {StoreOperationsService} from './store-operations.service';
-import {IPosition} from '../models/operation.models';
+import {IPortfolio, IPosition} from '../models/operation.models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +10,23 @@ export class FacadeOperationsService {
 
   constructor() { }
 
-  loadPortfolio(accountId: string): void {
+  public loadPortfolio(accountId: string): void {
     this.storeOperationsService.loadPortfolio(accountId);
   }
 
-  selectPositions(): Signal<IPosition[] | undefined> {
+  public selectPortfolio(): Signal<IPortfolio | null> {
+    return this.storeOperationsService.selectPortfolio;
+  }
+
+  public selectPositions(): Signal<IPosition[] | undefined> {
     return this.storeOperationsService.selectPositions;
   }
 
-  selectIsLoading(): Signal<boolean> {
+  public selectPositionBy(ticker: string): Signal<IPosition | null> {
+    return this.storeOperationsService.selectPositionBy(ticker);
+  }
+
+  public selectIsLoading(): Signal<boolean> {
     return this.storeOperationsService.selectIsLoading;
   }
 }
