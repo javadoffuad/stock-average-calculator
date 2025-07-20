@@ -1,9 +1,10 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiAppearance, TuiButton, TuiIcon, TuiTextfield, TuiTitle} from '@taiga-ui/core';
 import {TuiInputNumber, TuiTooltip} from '@taiga-ui/kit';
 import {TuiCurrencyPipe} from '@taiga-ui/addon-commerce';
 import {TuiCard} from '@taiga-ui/layout';
+import {UsersService} from '../../services/users/users.service';
 
 interface ICalculateAdditionalSharesParams {
   currentShares: number;     // Текущее количество акций
@@ -36,6 +37,9 @@ interface IResult {
   styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
+  private readonly usersService = inject(UsersService);
+
+  protected readonly currentInfo = this.usersService.currentInfo;
   protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),

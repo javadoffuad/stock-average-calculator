@@ -30,6 +30,7 @@ export class PositionsPageComponent {
         this.operationsService.loadPortfolio(account.id);
       } else {
         this.loadAccounts();
+        this.getInfo();
       }
     });
 
@@ -44,5 +45,8 @@ export class PositionsPageComponent {
 
   private loadAccounts() {
     this.usersService.loadAccounts();
+  }
+  private getInfo() {
+    this.usersService.getInfo();
   }
 }

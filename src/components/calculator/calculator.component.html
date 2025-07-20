@@ -1,9 +1,14 @@
 @let _result = result();
 @let controls = form.controls;
+@let info = currentInfo();
 
 <h2 tuiTitle="m">
   {{title}}
 </h2>
+
+@if (info) {
+  <p>{{info.tariff}}</p>
+}
 
 <div
   tuiAppearance="info"
