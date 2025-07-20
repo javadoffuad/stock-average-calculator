@@ -76,15 +76,22 @@
   class="button-calc"
   (click)="showResult()"
 >
-  Расчитать
+  Рассчитать
 </button>
 
 @if (_result) {
+  @let sharesToBuy = _result.sharesToBuy | tuiAmount | async;
+  @let newTotalCost = _result.newTotalCost | tuiAmount : 'RUB' : 'right' | async;
+  @let newAveragePrice = _result.newAveragePrice | tuiAmount : 'RUB' : 'right' | async;
+
   <div class="result">
     <h2 tuiTitle="m">
       Результат
-      <div tuiSubtitle>Нужно докупить {{ _result.sharesToBuy }} акций, на сумму: {{_result.newTotalCost.toFixed(2)}} {{'RUB' | tuiCurrency}}</div>
-      <div tuiSubtitle>Новая средняя цена: {{ _result.newAveragePrice.toFixed(2) }} {{ 'RUB' | tuiCurrency }}</div>
+      <div tuiSubtitle>Нужно докупить {{ sharesToBuy }} акций, на сумму: {{newTotalCost}}</div>
+      <div tuiSubtitle>Новая средняя цена: {{ newAveragePrice }}</div>
+      @if (_result.commission) {
+        <div tuiSubtitle>Комиссия: {{ _result.commission | tuiAmount : 'RUB' : 'right' | async }}</div>
+      }
     </h2>
   </div>
 }
