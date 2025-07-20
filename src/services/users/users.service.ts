@@ -13,14 +13,14 @@ export class UsersService {
   private info = signal<IInfo | null>(null);
   public currentAccount = computed(() => this.accounts().length ? this.accounts()[0] : null);
   public currentInfo = computed(() => this.info());
-  public commission = computed(() => {
+  public currentCommission = computed(() => {
     const tariff = this.currentInfo()?.tariff;
     return tariff ? this.getCommission(tariff) : null;
   });
 
   constructor() { }
 
-  loadAccounts(): void{
+  public loadAccounts(): void{
     this.http.post<IGetAccountsResponse>(
       `${this.serviceUrl}GetAccounts`,
       {
@@ -29,14 +29,14 @@ export class UsersService {
     ).subscribe(response => this.accounts.set(response.accounts));
   }
 
-  getInfo(): void {
+  public getInfo(): void {
     this.http.post<IInfo>(
       `${this.serviceUrl}GetInfo`,
       {},
     ).subscribe(response => this.info.set(response));
   }
 
-  getCommission(tariff: Tariff): ICommission {
+  private getCommission(tariff: Tariff): ICommission | null {
     switch (tariff) {
       case Tariff.INVESTOR:
         return {
@@ -65,6 +65,8 @@ export class UsersService {
           currency: 0.5,
           preciousMetals: 0.9,
         }
+      default:
+        return null;
     }
   }
 }

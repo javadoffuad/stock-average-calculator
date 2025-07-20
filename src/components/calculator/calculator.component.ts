@@ -2,26 +2,31 @@ import {Component, inject, signal} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TuiAppearance, TuiButton, TuiIcon, TuiTextfield, TuiTitle} from '@taiga-ui/core';
 import {TuiInputNumber, TuiTooltip} from '@taiga-ui/kit';
-import {TuiCurrencyPipe} from '@taiga-ui/addon-commerce';
+import {TuiAmountPipe, TuiCurrencyPipe} from '@taiga-ui/addon-commerce';
 import {TuiCard} from '@taiga-ui/layout';
 import {UsersService} from '../../services/users/users.service';
+import {ICommission} from '../../models/account.models';
+import {AsyncPipe} from '@angular/common';
 
-interface ICalculateAdditionalSharesParams {
+interface ICalculateAverageParams {
   currentShares: number;     // Текущее количество акций
   averagePrice: number;      // Текущая средняя цена (руб.)
   targetPrice: number;       // Желаемая средняя цена (руб.)
   currentMarketPrice: number; // Текущая рыночная цена (руб.)
+  commission: ICommission | null;
 }
 
 interface IResult {
   sharesToBuy: number;
   newAveragePrice: number;
   newTotalCost: number;
+  commission?: number;
 }
 
 @Component({
   selector: 'app-calculator',
   imports: [
+    AsyncPipe,
     ReactiveFormsModule,
     TuiTextfield,
     TuiInputNumber,
@@ -32,6 +37,7 @@ interface IResult {
     TuiCard,
     TuiTitle,
     TuiButton,
+    TuiAmountPipe,
   ],
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.css'
@@ -39,7 +45,7 @@ interface IResult {
 export class CalculatorComponent {
   private readonly usersService = inject(UsersService);
 
-  protected readonly currentInfo = this.usersService.currentInfo;
+  protected readonly commission = this.usersService.currentCommission;
   protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),
@@ -56,9 +62,9 @@ export class CalculatorComponent {
    * - newAveragePrice — новая средняя цена (для проверки)
    */
   protected calculateAdditionalShares(
-    params: ICalculateAdditionalSharesParams
+    params: ICalculateAverageParams
   ): IResult {
-    const { currentShares, averagePrice, targetPrice, currentMarketPrice } = params;
+    const { currentShares, averagePrice, targetPrice, currentMarketPrice, commission } = params;
 
     // Уравнение для расчета:
     // (currentShares * averagePrice + sharesToBuy * currentMarketPrice) / (currentShares + sharesToBuy) = targetPrice
@@ -79,11 +85,14 @@ export class CalculatorComponent {
     const totalCost = currentShares * averagePrice + sharesToBuy * currentMarketPrice;
     const totalShares = currentShares + sharesToBuy;
     const newAveragePrice = totalCost / totalShares;
+    const newTotalCost = (sharesToBuy * newAveragePrice);
+    const commissionPrice = commission ? (newTotalCost / 100 * commission.share) : undefined;
 
     return {
       sharesToBuy,
       newAveragePrice,
       newTotalCost: (sharesToBuy * newAveragePrice),
+      commission: commissionPrice,
     };
   }
 
@@ -92,6 +101,7 @@ export class CalculatorComponent {
     const averagePrice = this.form.controls.averagePrice.value;
     const targetPrice = this.form.controls.targetPrice.value;
     const currentMarketPrice = this.form.controls.currentMarketPrice.value;
+    const commission = this.commission();
 
     if (!(currentShares && averagePrice && targetPrice && currentMarketPrice)) {
       return;
@@ -102,6 +112,7 @@ export class CalculatorComponent {
       averagePrice,
       targetPrice,
       currentMarketPrice,
+      commission,
     });
 
     this.result.set(result);
