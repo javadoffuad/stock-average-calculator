@@ -1,9 +1,7 @@
 import {Component, computed, effect, inject, Signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {UsersService} from '../../services/users/users.service';
-import {OperationsService} from '../../services/operations/operations.service';
+import {FacadeInstrumentsService, FacadeOperationsService, FacadeUsersService} from '../../services/facade';
 import {IAccount} from '../../models/account.models';
-import {InstrumentsService} from '../../services/instruments/instruments.service';
 
 @Component({
   selector: 'app-positions-page',
@@ -13,12 +11,12 @@ import {InstrumentsService} from '../../services/instruments/instruments.service
   templateUrl: './positions-page.component.html',
 })
 export class PositionsPageComponent {
-  private readonly usersService = inject(UsersService);
-  private readonly operationsService = inject(OperationsService);
-  private readonly instrumentsService = inject(InstrumentsService);
+  private readonly facadeUsersService = inject(FacadeUsersService);
+  private readonly facadeOperationsService = inject(FacadeOperationsService);
+  private readonly facadeInstrumentsService = inject(FacadeInstrumentsService);
 
-  protected account: Signal<IAccount | null> = this.usersService.currentAccount;
-  protected portfolio = this.operationsService.selectPortfolio;
+  protected account: Signal<IAccount | null> = this.facadeUsersService.selectCurrentAccount;
+  protected portfolio = this.facadeOperationsService.selectPortfolio;
   protected positions = computed(() => this.portfolio()?.positions);
   protected positionShares = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
 
@@ -27,7 +25,7 @@ export class PositionsPageComponent {
       const account = this.account();
 
       if (account) {
-        this.operationsService.loadPortfolio(account.id);
+        this.facadeOperationsService.loadPortfolio(account.id);
       } else {
         this.loadAccounts();
         this.getInfo();
@@ -38,15 +36,15 @@ export class PositionsPageComponent {
       const positionShareIds = this.positionShares().map(p => p.instrumentUid);
 
       if (positionShareIds.length) {
-        this.instrumentsService.loadSharesBy(positionShareIds);
+        this.facadeInstrumentsService.loadSharesBy(positionShareIds);
       }
     });
   }
 
   private loadAccounts() {
-    this.usersService.loadAccounts();
+    this.facadeUsersService.loadAccounts();
   }
   private getInfo() {
-    this.usersService.getInfo();
+    this.facadeUsersService.getInfo();
   }
 }

@@ -1,16 +1,16 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
-import {API_URL} from '../../constants/api.constants';
-import {HttpClient} from '@angular/common/http';
-import {IAccount, ICommission, IGetAccountsResponse, IInfo, Tariff} from '../../models/account.models';
+import {IAccount, ICommission, IInfo, Tariff} from '../../../models/account.models';
+import {UsersService} from '../../api';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
-  private serviceUrl = `${API_URL}.UsersService/`;
-  private http = inject(HttpClient);
+export class StoreUsersService {
+  private readonly usersService = inject(UsersService);
+
   private accounts = signal<IAccount[]>([]);
   private info = signal<IInfo | null>(null);
+
   public currentAccount = computed(() => this.accounts().length ? this.accounts()[0] : null);
   public currentInfo = computed(() => this.info());
   public currentCommission = computed(() => {
@@ -18,22 +18,12 @@ export class UsersService {
     return tariff ? this.getCommission(tariff) : null;
   });
 
-  constructor() { }
-
   public loadAccounts(): void{
-    this.http.post<IGetAccountsResponse>(
-      `${this.serviceUrl}GetAccounts`,
-      {
-        "status": "ACCOUNT_STATUS_UNSPECIFIED"
-      },
-    ).subscribe(response => this.accounts.set(response.accounts));
+    this.usersService.loadAccounts().subscribe(accounts => this.accounts.set(accounts));
   }
 
   public getInfo(): void {
-    this.http.post<IInfo>(
-      `${this.serviceUrl}GetInfo`,
-      {},
-    ).subscribe(response => this.info.set(response));
+    this.usersService.getInfo().subscribe(response => this.info.set(response));
   }
 
   private getCommission(tariff: Tariff): ICommission | null {

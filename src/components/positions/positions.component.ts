@@ -1,8 +1,7 @@
 import {Component, computed, inject, Signal} from '@angular/core';
 import {PositionItemComponent} from '../position-item/position-item.component';
-import {OperationsService} from '../../services/operations/operations.service';
+import {FacadeOperationsService, FacadeInstrumentsService} from '../../services/facade';
 import {TuiTitle} from "@taiga-ui/core";
-import {InstrumentsService} from '../../services/instruments/instruments.service';
 import {IPosition} from '../../models/operation.models';
 import {FindInstrumentPipe} from '../../pipes/find-instrument.pipe';
 
@@ -17,12 +16,12 @@ import {FindInstrumentPipe} from '../../pipes/find-instrument.pipe';
   styleUrl: './positions.component.css'
 })
 export class PositionsComponent {
-  private readonly operationsService = inject(OperationsService);
-  private readonly instrumentsService = inject(InstrumentsService);
+  private readonly facadeOperationsService = inject(FacadeOperationsService);
+  private readonly facadeInstrumentsService = inject(FacadeInstrumentsService);
 
-  protected positions = computed(() => this.operationsService.selectPortfolio()?.positions);
+  protected positions = this.facadeOperationsService.selectPositions;
   protected positionShares: Signal<IPosition[]> = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
-  protected instruments = this.instrumentsService.selectInstruments;
+  protected instruments = this.facadeInstrumentsService.selectInstruments;
 
   constructor() {}
 }

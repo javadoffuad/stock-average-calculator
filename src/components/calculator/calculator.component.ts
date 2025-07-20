@@ -4,9 +4,9 @@ import {TuiAppearance, TuiButton, TuiIcon, TuiTextfield, TuiTitle} from '@taiga-
 import {TuiInputNumber, TuiTooltip} from '@taiga-ui/kit';
 import {TuiAmountPipe, TuiCurrencyPipe} from '@taiga-ui/addon-commerce';
 import {TuiCard} from '@taiga-ui/layout';
-import {UsersService} from '../../services/users/users.service';
 import {ICommission} from '../../models/account.models';
 import {AsyncPipe} from '@angular/common';
+import {FacadeUsersService} from '../../services/facade';
 
 interface ICalculateAverageParams {
   currentShares: number;     // Текущее количество акций
@@ -43,9 +43,9 @@ interface IResult {
   styleUrl: './calculator.component.css'
 })
 export class CalculatorComponent {
-  private readonly usersService = inject(UsersService);
+  private readonly facadeUsersService = inject(FacadeUsersService);
 
-  protected readonly commission = this.usersService.currentCommission;
+  protected readonly commission = this.facadeUsersService.selectCommission;
   protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),
