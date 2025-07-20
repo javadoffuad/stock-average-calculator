@@ -19,7 +19,7 @@ export class PositionsComponent {
   private readonly facadeOperationsService = inject(FacadeOperationsService);
   private readonly facadeInstrumentsService = inject(FacadeInstrumentsService);
 
-  protected positions = this.facadeOperationsService.selectPositions();
+  protected positions = this.facadeOperationsService.selectPositions;
   protected positionShares: Signal<IPosition[]> = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
   protected instruments = this.facadeInstrumentsService.selectInstruments;
 

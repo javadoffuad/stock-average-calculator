@@ -45,7 +45,7 @@ interface IResult {
 export class CalculatorComponent {
   private readonly facadeUsersService = inject(FacadeUsersService);
 
-  protected readonly commission = this.facadeUsersService.currentCommission;
+  protected readonly commission = this.facadeUsersService.selectCommission;
   protected title = 'Рассчет средней цены акций';
   protected form = new FormGroup({
     currentShares: new FormControl(null),

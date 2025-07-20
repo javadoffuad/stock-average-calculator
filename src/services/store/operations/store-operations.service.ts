@@ -17,7 +17,6 @@ export class StoreOperationsService {
   public selectPositionBy = (ticker: string): Signal<IPosition | null> => computed(() => {
     return this.selectPositions()?.find(p => p.ticker === ticker) ?? null
   });
-  public selectIsLoading = computed(() => Object.values(this.isLoading()).some(Boolean));
 
   public loadPortfolio(accountId: string): void {
     this.isLoading.set({[accountId]: true});

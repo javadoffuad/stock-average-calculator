@@ -15,8 +15,8 @@ export class PositionsPageComponent {
   private readonly facadeOperationsService = inject(FacadeOperationsService);
   private readonly facadeInstrumentsService = inject(FacadeInstrumentsService);
 
-  protected account: Signal<IAccount | null> = this.facadeUsersService.currentAccount;
-  protected portfolio = this.facadeOperationsService.selectPortfolio();
+  protected account: Signal<IAccount | null> = this.facadeUsersService.selectCurrentAccount;
+  protected portfolio = this.facadeOperationsService.selectPortfolio;
   protected positions = computed(() => this.portfolio()?.positions);
   protected positionShares = computed(() => this.positions()?.filter(p => p.instrumentType === 'share') || [])
 

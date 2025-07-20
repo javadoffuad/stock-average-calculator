@@ -8,7 +8,7 @@ import {StoreInstrumentsService} from '../../store/instruments/store-instruments
 export class FacadeInstrumentsService {
   private storeInstrumentsService = inject(StoreInstrumentsService);
 
-  public selectInstruments: Signal<IInstrument[]> = computed(() => this.storeInstrumentsService.selectInstruments());
+  public selectInstruments: Signal<IInstrument[]> = this.storeInstrumentsService.selectInstruments;
 
   public selectInstrumentBy(instrumentId: string){
     return this.storeInstrumentsService.selectInstrumentBy(instrumentId);
