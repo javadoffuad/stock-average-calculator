@@ -12,11 +12,22 @@
   width: 100%;
 }
 
-.footer {
+.calendar {
   margin-top: 20px;
 }
 
 .info {
   width: 100%;
   margin-top: 10px;
+}
+
+.exchange {
+  max-width: 720px;
+  width: 100%;
+  margin-top: 20px;
+}
+.exchange__cards {
+  display: flex;
+  gap: 70px;
+  margin-top: 24px;
 }

@@ -4,9 +4,10 @@ import {IPosition} from '../../models/operation.models';
 import {PAGE_POSITIONS_PARAM, ROUTES} from '../../constants/routes.constants';
 import {StockCardComponent} from '../stock-card/stock-card.component';
 import {FacadeInstrumentsService, FacadeOperationsService} from '../../services/facade';
-import {IInstrument} from '../../models/instrument.models';
+import {IInstrument, RealExchange} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
-import {TuiLink} from '@taiga-ui/core';
+import {TuiAutoColorPipe, TuiLink, TuiTitle} from '@taiga-ui/core';
+import {TuiAvatar} from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-stock-detail',
@@ -14,9 +15,12 @@ import {TuiLink} from '@taiga-ui/core';
     RouterLink,
     StockCardComponent,
     TuiLink,
+    TuiTitle,
+    TuiAvatar,
+    TuiAutoColorPipe,
   ],
   templateUrl: './stock-detail.component.html',
-  styleUrl: './stock-detail.component.less',
+  styleUrl: './stock-detail.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockDetailComponent {
@@ -53,5 +57,18 @@ export class StockDetailComponent {
 
   toggleFavorite(instrument: IInstrument): void {
     // this.featureStocksService.setStock(instrument);
+  }
+
+  getRealExchange(realExchange: RealExchange): string {
+    switch (realExchange) {
+      case RealExchange.REAL_EXCHANGE_MOEX:
+        return 'Московская биржа';
+      case RealExchange.REAL_EXCHANGE_RTS:
+        return 'Санкт-Петербургская биржа';
+      case RealExchange.REAL_EXCHANGE_OTC:
+        return 'Внебиржевой инструмент';
+      default:
+        return 'Тип не определён';
+    }
   }
 }

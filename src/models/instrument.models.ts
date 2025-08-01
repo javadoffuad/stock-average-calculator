@@ -59,7 +59,7 @@ export interface IInstrument {
   };
   apiTradeAvailableFlag: boolean;
   uid: string;
-  realExchange: string;
+  realExchange: RealExchange;
   positionUid: string;
   assetUid: string;
   instrumentExchange: string;
@@ -83,4 +83,11 @@ export interface IInstrument {
     units: string;
     nano: number;
   };
+}
+
+export enum RealExchange {
+  REAL_EXCHANGE_UNSPECIFIED =	'REAL_EXCHANGE_UNSPECIFIED', //	Тип не определён.
+  REAL_EXCHANGE_MOEX	= 'REAL_EXCHANGE_MOEX', // Московская биржа.
+  REAL_EXCHANGE_RTS = 'REAL_EXCHANGE_RTS', //	Санкт-Петербургская биржа.
+  REAL_EXCHANGE_OTC	= 'REAL_EXCHANGE_OTC', //	Внебиржевой инструмент.
 }

@@ -2,6 +2,8 @@
 @let stockSectorName = sectorName();
 
 @if (instrumentItem) {
+  @let realExchange = getRealExchange(instrumentItem.realExchange);
+
   <div class="main-container">
     @defer {
       <app-stock-card
@@ -46,7 +48,7 @@
 <!--    </div>-->
   </div>
 
-  <section class="footer">
+  <section class="calendar">
     <a
       iconEnd="@tui.arrow-right"
       tuiLink
@@ -54,5 +56,38 @@
     >
       Перейти к калькулятору
     </a>
+  </section>
+
+  <section class="exchange">
+    <h2 tuiTitle="m">
+      О компании {{ instrumentItem.name }}
+    </h2>
+
+    <div class="exchange__cards">
+      <div tuiTitle>
+        <span tuiSubtitle>Страна эмитента</span>
+        <div>
+          <tui-avatar
+            class="stock__logo"
+            appearance="primary"
+            size="xs"
+            [style.background]="instrumentItem.countryOfRiskName | tuiAutoColor"
+             />
+          {{ instrumentItem.countryOfRiskName }}
+        </div>
+      </div>
+
+      <div tuiTitle>
+        <span tuiSubtitle>Биржа торгов</span>
+        <div>
+          <tui-avatar
+            class="stock__logo"
+            appearance="primary"
+            size="xs"
+            [style.background]="realExchange | tuiAutoColor" />
+          {{ realExchange }}
+        </div>
+      </div>
+    </div>
   </section>
 }
