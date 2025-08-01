@@ -10,7 +10,7 @@ import {getFullLogoUrl} from '../../utils/brands.utils';
   selector: 'app-stock-card',
   imports: [TuiAppearance, TuiAvatar, TuiCardLarge, TuiLike, TuiTitle],
   templateUrl: './stock-card.component.html',
-  styleUrl: './stock-card.component.less',
+  styleUrl: './stock-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockCardComponent {
