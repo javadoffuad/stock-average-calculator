@@ -1,5 +1,6 @@
 @let instrumentItem = instrument();
 @let stockSectorName = sectorName();
+@let brand = asset()?.brand;
 
 @if (instrumentItem) {
   @let realExchange = getRealExchange(instrumentItem.realExchange);
@@ -62,6 +63,10 @@
     <h2 tuiTitle="m">
       О компании {{ instrumentItem.name }}
     </h2>
+
+    @if (brand) {
+      <div class="brand-description">{{brand.info ?? brand.description}}</div>
+    }
 
     <div class="exchange__cards">
       <div tuiTitle>

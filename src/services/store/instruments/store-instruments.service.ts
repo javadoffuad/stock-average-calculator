@@ -1,5 +1,5 @@
 import {computed, inject, Injectable, Signal, signal} from '@angular/core';
-import {IInstrument} from '../../../models/instrument.models';
+import {IAsset, IInstrument} from '../../../models/instrument.models';
 import {forkJoin, take} from 'rxjs';
 import {InstrumentsService} from '../../api';
 
@@ -10,8 +10,14 @@ export class StoreInstrumentsService {
   private instrumentsService = inject(InstrumentsService);
 
   private instruments = signal<Record<string, IInstrument | null>>({});
+  private selectedAssetId = signal<string | null>(null);
+  private assets = signal<Record<string, IAsset | null>>({});
   public selectInstruments: Signal<IInstrument[]> = computed(() => {
     return Object.values(this.instruments()).filter(instrument => !!instrument);
+  });
+  public selectActiveAsset = computed(() => {
+    const assetId = this.selectedAssetId();
+    return assetId ? this.assets()[assetId] ?? null : null;
   });
 
   public selectInstrumentBy(instrumentId: string){
@@ -54,6 +60,21 @@ export class StoreInstrumentsService {
       this.instruments.update(currentInstruments => ({
         ...currentInstruments,
         ...newInstruments,
+      }));
+    });
+  }
+
+  public loadAssetBy(assetId: string): void {
+    if (!assetId) {
+      return;
+    }
+
+    this.selectedAssetId.set(assetId);
+
+    this.instrumentsService.loadAssetBy(assetId).pipe(take(1)).subscribe(response => {
+      this.assets.update(assets => ({
+        ...assets,
+        [assetId]: response.asset,
       }));
     });
   }

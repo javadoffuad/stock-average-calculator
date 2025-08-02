@@ -1,7 +1,7 @@
 import { inject, Injectable} from '@angular/core';
 import {API_URL} from '../../../constants/api.constants';
 import {HttpClient} from '@angular/common/http';
-import { IInstrumentResponse} from '../../../models/instrument.models';
+import {IAssetResponse, IInstrumentResponse} from '../../../models/instrument.models';
 import { Observable} from 'rxjs';
 
 @Injectable({
@@ -19,6 +19,15 @@ export class InstrumentsService {
         idType,
         id: instrumentId,
         classCode,
+      },
+    );
+  }
+
+  public loadAssetBy(assetId: string): Observable<IAssetResponse>{
+    return this.http.post<IAssetResponse>(
+      `${this.serviceUrl}GetAssetBy`,
+      {
+        id: assetId,
       },
     );
   }

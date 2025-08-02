@@ -31,6 +31,7 @@ export class StockDetailComponent {
 
   protected readonly stocksPage = ROUTES.home;
   protected stock = signal<IPosition | null>(null);
+  protected asset = this.facadeInstrumentsService.selectActiveAsset();
   protected instrument = signal<IInstrument | null>(null);
   protected sectorName = computed(() => {
     const sectorCode = this.instrument()?.sector;
@@ -47,6 +48,14 @@ export class StockDetailComponent {
       if (position) {
         const instrument = this.facadeInstrumentsService.selectInstrumentBy(position.instrumentUid);
         this.instrument.set(instrument);
+      }
+    });
+
+    effect(() => {
+      const instrument = this.instrument();
+
+      if (instrument) {
+        this.facadeInstrumentsService.loadAssetBy(instrument.assetUid);
       }
     });
   }

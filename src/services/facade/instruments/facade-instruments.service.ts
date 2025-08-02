@@ -1,5 +1,5 @@
-import {computed, inject, Injectable, Signal} from '@angular/core';
-import {IInstrument} from '../../../models/instrument.models';
+import { inject, Injectable, Signal} from '@angular/core';
+import {IAsset, IInstrument} from '../../../models/instrument.models';
 import {StoreInstrumentsService} from '../../store/instruments/store-instruments.service';
 
 @Injectable({
@@ -12,6 +12,14 @@ export class FacadeInstrumentsService {
 
   public selectInstrumentBy(instrumentId: string){
     return this.storeInstrumentsService.selectInstrumentBy(instrumentId);
+  }
+
+  public selectActiveAsset(): Signal<IAsset | null> {
+    return this.storeInstrumentsService.selectActiveAsset;
+  }
+
+  public loadAssetBy(assetId: string): void {
+    this.storeInstrumentsService.loadAssetBy(assetId);
   }
 
   public loadShareBy(instrumentId: string): void {

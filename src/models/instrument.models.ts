@@ -85,9 +85,67 @@ export interface IInstrument {
   };
 }
 
+interface IBrand {
+  uid: string;
+  name: string;
+  description: string;
+  company: string;
+  sector: string;
+  countryOfRiskName: string;
+  info: string;
+  countryOfRisk: string;
+}
+
 export enum RealExchange {
   REAL_EXCHANGE_UNSPECIFIED =	'REAL_EXCHANGE_UNSPECIFIED', //	Тип не определён.
   REAL_EXCHANGE_MOEX	= 'REAL_EXCHANGE_MOEX', // Московская биржа.
   REAL_EXCHANGE_RTS = 'REAL_EXCHANGE_RTS', //	Санкт-Петербургская биржа.
   REAL_EXCHANGE_OTC	= 'REAL_EXCHANGE_OTC', //	Внебиржевой инструмент.
 }
+
+interface NanoUnits {
+  nano: number;
+  units: string;
+}
+
+interface ClearingCertificate {
+  nominal: NanoUnits;
+  nominalCurrency: string;
+}
+
+interface ISecurity {
+  // etf?: Etf;
+  clearingCertificate?: ClearingCertificate;
+  share?: IInstrument;
+  type: string;
+  // bond?: Bond;
+  // sp?: Sp;
+  isin: string;
+}
+
+export interface IAssetResponse {
+  asset: IAsset;
+}
+
+export interface IAsset {
+  cfi: string;
+  description: string;
+  uid: string;
+  requiredTests: string[];
+  codeNsd: string;
+  deletedAt: string;
+  security: ISecurity;
+  instruments: IInstrument[];
+  gosRegCode: string;
+  name: string;
+  brCodeName: string;
+  "currency": {
+    "baseCurrency": string;
+  },
+  brCode: string;
+  brand: IBrand;
+  nameBrief: string;
+  status: string;
+  updatedAt: string;
+}
+
