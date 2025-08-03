@@ -8,7 +8,7 @@ import {IInstrument, RealExchange} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
 import {TuiAutoColorPipe, TuiInitialsPipe, TuiLink, TuiTitle} from '@taiga-ui/core';
 import {TuiAvatar} from '@taiga-ui/kit';
-import {getFullFlagUrl} from '../../utils/brands.utils';
+import {getFullExchangeLogoUrl, getFullFlagUrl} from '../../utils/brands.utils';
 
 @Component({
   selector: 'app-stock-detail',
@@ -45,7 +45,11 @@ export class StockDetailComponent {
   protected readonly countryFlag = computed(() => {
     const countryCode = this.instrument()?.countryOfRisk;
     return countryCode ? getFullFlagUrl(countryCode) : null;
-  })
+  });
+  protected readonly exchangeLogo = computed(() => {
+    const realExchange = this.instrument()?.realExchange;
+    return realExchange ? getFullExchangeLogoUrl(realExchange) : null;
+  });
 
   constructor() {
     effect(() => {

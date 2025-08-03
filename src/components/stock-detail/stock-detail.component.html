@@ -5,6 +5,7 @@
 @if (instrumentItem) {
   @let realExchange = getRealExchange(instrumentItem.realExchange);
   @let flagSrc = countryFlag() ? countryFlag() : (instrumentItem.countryOfRisk | tuiInitials);
+  @let exchangeSrc = exchangeLogo() ? exchangeLogo() : (realExchange | tuiInitials);
 
   <div class="main-container">
     @defer {
@@ -91,6 +92,7 @@
             class="stock__logo"
             appearance="primary"
             size="xs"
+            [src]="exchangeSrc"
             [style.background]="realExchange | tuiAutoColor" />
           {{ realExchange }}
         </div>
