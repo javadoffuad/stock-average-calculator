@@ -6,8 +6,9 @@ import {StockCardComponent} from '../stock-card/stock-card.component';
 import {FacadeInstrumentsService, FacadeOperationsService} from '../../services/facade';
 import {IInstrument, RealExchange} from '../../models/instrument.models';
 import {SectorsService} from '../../services/sectors/sectors.service';
-import {TuiAutoColorPipe, TuiLink, TuiTitle} from '@taiga-ui/core';
+import {TuiAutoColorPipe, TuiInitialsPipe, TuiLink, TuiTitle} from '@taiga-ui/core';
 import {TuiAvatar} from '@taiga-ui/kit';
+import {getFullFlagUrl} from '../../utils/brands.utils';
 
 @Component({
   selector: 'app-stock-detail',
@@ -18,6 +19,7 @@ import {TuiAvatar} from '@taiga-ui/kit';
     TuiTitle,
     TuiAvatar,
     TuiAutoColorPipe,
+    TuiInitialsPipe,
   ],
   templateUrl: './stock-detail.component.html',
   styleUrl: './stock-detail.component.css',
@@ -40,6 +42,10 @@ export class StockDetailComponent {
   protected position = this.facadeOperationsService.selectPositionBy(this.route.snapshot.paramMap.get(PAGE_POSITIONS_PARAM) ?? '');
   protected activeTabIndex = 0;
   protected readonly routes = ROUTES;
+  protected readonly countryFlag = computed(() => {
+    const countryCode = this.instrument()?.countryOfRisk;
+    return countryCode ? getFullFlagUrl(countryCode) : null;
+  })
 
   constructor() {
     effect(() => {
